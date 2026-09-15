@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse - React.js + MongoDB Appointment Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React 18 & Babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #0f172a;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #1e293b;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Student Banner */
+        .student-strip {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .student-strip strong {
+            color: #38bdf8;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 24px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .header-title h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .header-title p {
+            font-size: 0.88rem;
+            color: #64748b;
+        }
+
+        /* Database Status Pill */
+        .db-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .db-connected {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .db-fallback {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        /* Layout Grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .card h2 {
+            font-size: 1.2rem;
+            color: #0f172a;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.88rem;
+            outline: none;
+            background: #f8fafc;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+        .btn-delete:hover {
+            background: #fca5a5;
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: #334155;
+        }
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .badge-priority {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .priority-urgent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .priority-regular {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .alert-box {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 16px;
+        }
+        .alert-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        @media (max-width: 860px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [status, setStatus] = useState(null);
+            const [appointments, setAppointments] = useState([]);
+            const [isLoading, setIsLoading] = useState(true);
+            const [feedbackMsg, setFeedbackMsg] = useState('');
+
+            // Form state
+            const [patientName, setPatientName] = useState('');
+            const [doctorName, setDoctorName] = useState('Dr. Amarsinh V. Vidhate');
+            const [department, setDepartment] = useState('Cardiology');
+            const [appointmentDate, setAppointmentDate] = useState('2026-09-25');
+            const [timeSlot, setTimeSlot] = useState('11:00 AM');
+            const [priority, setPriority] = useState('Regular');
+
+            // Load status & appointments
+            const fetchData = async () => {
+                try {
+                    const statusRes = await fetch('/api/status');
+                    const statusJson = await statusRes.json();
+                    setStatus(statusJson);
+
+                    const aptRes = await fetch('/api/appointments');
+                    const aptJson = await aptRes.json();
+                    if (aptJson.success) {
+                        setAppointments(aptJson.data);
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                fetchData();
+            }, []);
+
+            // Submit booking
+            const handleBook = async (e) => {
+                e.preventDefault();
+                if (!patientName.trim()) return alert('Please enter patient name');
+
+                const payload = { patientName, doctorName, department, appointmentDate, timeSlot, priority };
+
+                try {
+                    const res = await fetch('/api/appointments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json = await res.json();
+                    if (json.success) {
+                        setFeedbackMsg(`✓ ${json.message}`);
+                        setPatientName('');
+                        fetchData();
+                        setTimeout(() => setFeedbackMsg(''), 4000);
+                    }
+                } catch (err) {
+                    alert('Error creating appointment: ' + err.message);
+                }
+            };
+
+            // Delete appointment
+            const handleDelete = async (id) => {
+                if (!confirm('Are you sure you want to cancel this appointment record?')) return;
+                try {
+                    const res = await fetch(`/api/appointments/${id}`, { method: 'DELETE' });
+                    const json = await res.json();
+                    if (json.success) {
+                        setFeedbackMsg('✓ Appointment record removed.');
+                        fetchData();
+                        setTimeout(() => setFeedbackMsg(''), 4000);
+                    }
+                } catch (err) {
+                    alert('Delete failed: ' + err.message);
+                }
+            };
+
+            return (
+                <div className="container">
+                    <div className="student-strip">
+                        <span>SBL-AWT Expt 05 | <strong>Connecting React.js with MongoDB</strong></span>
+                        <span>Student: <strong>Asmit Jogdand (25CE1051)</strong> | RAIT Computer Engg</span>
+                    </div>
+
+                    <header className="header">
+                        <div className="header-title">
+                            <h1>HealthPulse MERN Clinical Hub</h1>
+                            <p>Real-Time React.js Frontend Synchronized with Express & MongoDB</p>
+                        </div>
+                        <div>
+                            {status && (
+                                <div className={`db-status-pill ${status.mongoConnected ? 'db-connected' : 'db-fallback'}`}>
+                                    <span>{status.mongoConnected ? '🟢' : '🟡'}</span>
+                                    <span>Engine: {status.storageEngine}</span>
+                                </div>
+                            )}
+                        </div>
+                    </header>
+
+                    {feedbackMsg && (
+                        <div className="alert-box alert-success">
+                            {feedbackMsg}
+                        </div>
+                    )}
+
+                    <div className="layout-grid">
+                        {/* Booking Form */}
+                        <div className="card">
+                            <h2><span>📝</span> Book OPD Appointment</h2>
+                            <form onSubmit={handleBook}>
+                                <div className="form-group">
+                                    <label>Patient Full Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Asmit Jogdand"
+                                        value={patientName}
+                                        onChange={(e) => setPatientName(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Consulting Specialist</label>
+                                    <select value={doctorName} onChange={(e) => setDoctorName(e.target.value)}>
+                                        <option value="Dr. Amarsinh V. Vidhate">Dr. Amarsinh V. Vidhate (Chief Physician)</option>
+                                        <option value="Dr. Radhika Sen">Dr. Radhika Sen (Cardiology)</option>
+                                        <option value="Dr. Vikram Malhotra">Dr. Vikram Malhotra (Orthopedics)</option>
+                                        <option value="Dr. Neha Kulkarni">Dr. Neha Kulkarni (Trauma)</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Department</label>
+                                    <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Appointment Date</label>
+                                    <input
+                                        type="date"
+                                        value={appointmentDate}
+                                        onChange={(e) => setAppointmentDate(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Preferred Time Slot</label>
+                                    <select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
+                                        <option value="09:30 AM">09:30 AM</option>
+                                        <option value="10:30 AM">10:30 AM</option>
+                                        <option value="11:45 AM">11:45 AM</option>
+                                        <option value="02:30 PM">02:30 PM</option>
+                                        <option value="04:15 PM">04:15 PM</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Case Priority</label>
+                                    <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+                                        <option value="Regular">Regular Consultation</option>
+                                        <option value="Urgent">Urgent / Priority</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" className="btn btn-primary">
+                                    Save Appointment to DB &rarr;
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* Appointments Live Table */}
+                        <div className="card">
+                            <h2><span>📋</span> Active Scheduled Appointments ({appointments.length})</h2>
+                            {isLoading ? (
+                                <p style={{ color: '#64748b' }}>Connecting to API backend...</p>
+                            ) : appointments.length === 0 ? (
+                                <p style={{ color: '#64748b' }}>No appointments scheduled yet. Book your first slot!</p>
+                            ) : (
+                                <div className="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Patient</th>
+                                                <th>Doctor & Dept</th>
+                                                <th>Date & Slot</th>
+                                                <th>Priority</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {appointments.map(apt => (
+                                                <tr key={apt._id}>
+                                                    <td>
+                                                        <strong>{apt.patientName}</strong>
+                                                    </td>
+                                                    <td>
+                                                        <div>{apt.doctorName}</div>
+                                                        <small style={{ color: '#64748b' }}>{apt.department}</small>
+                                                    </td>
+                                                    <td>
+                                                        <div>{apt.appointmentDate}</div>
+                                                        <small style={{ color: '#0284c7', fontWeight: 600 }}>{apt.timeSlot}</small>
+                                                    </td>
+                                                    <td>
+                                                        <span className={`badge-priority ${apt.priority === 'Urgent' ? 'priority-urgent' : 'priority-regular'}`}>
+                                                            {apt.priority}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-delete"
+                                                            onClick={() => handleDelete(apt._id)}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

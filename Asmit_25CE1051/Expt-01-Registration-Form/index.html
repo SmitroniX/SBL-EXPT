@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse - Patient Registration & Health Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header / Branding -->
+        <header class="form-header">
+            <div class="badge">SBL-AWT | Experiment 01</div>
+            <div class="logo-area">
+                <span class="cross-icon">+</span>
+                <h1>HealthPulse</h1>
+            </div>
+            <p class="subtitle">Digital Clinical Portal & Patient Health Profile Registration</p>
+            <div class="student-meta">
+                <span><strong>Student:</strong> Asmit Jogdand</span>
+                <span><strong>Roll No:</strong> 25CE1051</span>
+                <span><strong>Dept:</strong> Computer Engineering, RAIT</span>
+            </div>
+        </header>
+
+        <!-- Main Registration Form -->
+        <main class="form-card">
+            <form id="registrationForm" action="#" method="POST" novalidate>
+                
+                <!-- Section 1: Personal Demographics -->
+                <fieldset class="form-section">
+                    <legend>1. Personal Information</legend>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="fullName">Full Name <span class="req">*</span></label>
+                            <input type="text" id="fullName" name="fullName" placeholder="e.g. Asmit Jogdand" required minlength="3" pattern="^[a-zA-Z\s]+$">
+                            <span class="field-hint">Alphabets only, minimum 3 characters.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth <span class="req">*</span></label>
+                            <input type="date" id="dob" name="dob" max="2026-01-01" required>
+                            <span class="field-hint">Select a valid birth date.</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Gender <span class="req">*</span></label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="Male" required> Male
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="Female" required> Female
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="Other" required> Other
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bloodGroup">Blood Group <span class="req">*</span></label>
+                            <select id="bloodGroup" name="bloodGroup" required>
+                                <option value="" disabled selected>-- Select Blood Group --</option>
+                                <option value="A+">A Positive (A+)</option>
+                                <option value="A-">A Negative (A-)</option>
+                                <option value="B+">B Positive (B+)</option>
+                                <option value="B-">B Negative (B-)</option>
+                                <option value="O+">O Positive (O+)</option>
+                                <option value="O-">O Negative (O-)</option>
+                                <option value="AB+">AB Positive (AB+)</option>
+                                <option value="AB-">AB Negative (AB-)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="patient@healthpulse.com" required>
+                            <span class="field-hint">Must be a valid email format.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Contact Number <span class="req">*</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="9876543210" pattern="[6-9][0-9]{9}" required>
+                            <span class="field-hint">10-digit Indian mobile number.</span>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 2: Clinical & Emergency Data -->
+                <fieldset class="form-section">
+                    <legend>2. Medical History & Insurance</legend>
+                    <div class="form-group">
+                        <label>Pre-Existing Conditions (Select applicable)</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" name="conditions" value="Diabetes"> Diabetes Mellitus</label>
+                            <label class="checkbox-label"><input type="checkbox" name="conditions" value="Hypertension"> Hypertension</label>
+                            <label class="checkbox-label"><input type="checkbox" name="conditions" value="Asthma"> Bronchial Asthma</label>
+                            <label class="checkbox-label"><input type="checkbox" name="conditions" value="Cardiac"> Cardiovascular Disease</label>
+                            <label class="checkbox-label"><input type="checkbox" name="conditions" value="None"> None of the Above</label>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="insuranceProvider">Insurance Provider</label>
+                            <input type="text" id="insuranceProvider" name="insuranceProvider" placeholder="e.g. Star Health / ICICI Lombard">
+                        </div>
+                        <div class="form-group">
+                            <label for="policyNumber">Policy Number</label>
+                            <input type="text" id="policyNumber" name="policyNumber" placeholder="POL-8849-2026" pattern="^[A-Z0-9\-]+$">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idProof">Upload ID / Insurance Card (PDF, PNG, JPEG) <span class="req">*</span></label>
+                        <input type="file" id="idProof" name="idProof" accept=".pdf,.png,.jpg,.jpeg" required>
+                        <span class="field-hint">Max file size: 5MB</span>
+                    </div>
+                </fieldset>
+
+                <!-- Section 3: Account Security & Privacy -->
+                <fieldset class="form-section">
+                    <legend>3. Portal Credentials & Security</legend>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="password">Portal Password <span class="req">*</span></label>
+                            <input type="password" id="password" name="password" placeholder="At least 8 chars, 1 uppercase, 1 symbol" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}" required>
+                            <span class="field-hint">Min 8 chars, Upper, Lower, Digit & Special Symbol.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password <span class="req">*</span></label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-type your password" required>
+                            <span class="field-hint error-msg" id="pwdMismatch" style="display:none; color:#ef4444;">Passwords do not match!</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label full-consent">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span>I confirm that all health details provided are accurate and agree to the <strong>HealthPulse HIPAA & Patient Privacy Policy</strong>. <span class="req">*</span></span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!-- Form Controls -->
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-secondary">Reset Form</button>
+                    <button type="submit" class="btn btn-primary">Complete Registration</button>
+                </div>
+            </form>
+        </main>
+
+        <!-- Dynamic Success Confirmation Modal -->
+        <div id="successModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <div class="modal-icon">&#10004;</div>
+                <h2>Registration Successful!</h2>
+                <p id="modalMessage">Your patient record has been securely enrolled into HealthPulse.</p>
+                <div class="summary-box" id="registrationSummary"></div>
+                <button type="button" class="btn btn-primary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 HealthPulse Clinical Suite | Skill Based Lab - Advanced Web Technology | RAIT</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

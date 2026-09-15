@@ -1,0 +1,11 @@
+{
+  "name": "healthpulse-node-webpage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 06: Design a Web Page using Node.js - HealthPulse Portal",
+  "main": "server.js",
+  "author": "Asmit Jogdand (25CE1051)",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

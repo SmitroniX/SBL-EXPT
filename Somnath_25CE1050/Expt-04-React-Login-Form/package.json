@@ -1,0 +1,14 @@
+{
+  "name": "techvault-react-login-form",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 04: Create a Simple Login Form using React.js - TechVault Portal",
+  "author": "Somnath Jha (25CE1050)",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

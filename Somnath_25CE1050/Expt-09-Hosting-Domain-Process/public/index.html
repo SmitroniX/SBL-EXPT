@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVault - Cloud Hosting & Domain Infrastructure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --bg: #090d16;
+            --card: #111827;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #1f2937;
+            --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 28px 20px; line-height: 1.6; }
+        .container { max-width: 1060px; margin: 0 auto; }
+
+        .student-bar {
+            background: rgba(255,255,255,0.08); border: 1px solid var(--border); padding: 8px 18px; border-radius: 8px; font-size: 0.82rem;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 8px; color: #c7d2fe;
+        }
+        .student-bar strong { color: #818cf8; }
+
+        header { text-align: center; margin-bottom: 32px; }
+        header h1 { font-size: 2rem; font-weight: 800; color: #ffffff; }
+        header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 6px; }
+
+        .status-hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: var(--radius); padding: 28px; margin-bottom: 28px; border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+        }
+        .domain-tag { font-family: monospace; font-size: 1.4rem; font-weight: 800; color: #ffffff; background: rgba(0,0,0,0.3); padding: 6px 14px; border-radius: 8px; }
+        .badge-live { background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 800; font-size: 0.8rem; padding: 6px 14px; border-radius: 999px; border: 1px solid #10b981; }
+
+        .card { background: var(--card); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; }
+        .card h2 { font-size: 1.25rem; font-weight: 700; color: #818cf8; margin-bottom: 14px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+        th { text-align: left; padding: 10px 12px; background: #0b0f19; color: #9ca3af; font-weight: 600; border-bottom: 1px solid var(--border); }
+        td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: #d1d5db; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .record-type { font-family: monospace; font-weight: 700; color: #818cf8; background: rgba(99,102,241,0.15); padding: 2px 6px; border-radius: 4px; }
+        .record-val { font-family: monospace; color: #34d399; }
+
+        .step-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .step-item { display: flex; gap: 14px; align-items: flex-start; }
+        .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+        .step-body h4 { font-size: 0.95rem; color: #ffffff; }
+        .step-body p { font-size: 0.84rem; color: var(--text-muted); margin-top: 2px; }
+
+        .dns-checker { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+        .dns-checker input { flex: 1; min-width: 240px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: #1f2937; color: #ffffff; font-size: 0.9rem; }
+        .dns-checker select { padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: #1f2937; color: #ffffff; font-size: 0.9rem; }
+        .btn-check { background: var(--primary); color: #ffffff; font-weight: 700; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; }
+        .btn-check:hover { background: var(--primary-dark); }
+        .check-result { margin-top: 14px; background: #090d16; border-radius: 8px; padding: 12px 16px; font-family: monospace; font-size: 0.82rem; color: #34d399; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="student-bar">
+            <span>SBL-AWT Expt 09 | <strong>Hosting the Website &amp; Domain Registration Process</strong></span>
+            <span>Student: <strong>Somnath Jha (25CE1050)</strong> | RAIT Computer Engineering</span>
+        </div>
+
+        <header>
+            <h1>TechVault Cloud Deployment &amp; Domain Architecture</h1>
+            <p>Production DNS Zone Records, Registrar Workflow, and Edge CDN Orchestration</p>
+        </header>
+
+        <div class="status-hero">
+            <div>
+                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Live Production Domain</div>
+                <div class="domain-tag">https://techvault-store.io</div>
+            </div>
+            <div>
+                <span class="badge-live">● GLOBAL PROPAGATION ACTIVE</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🌐 Production DNS Zone Configuration</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Authoritative resource records configured at Cloudflare Anycast Nameservers:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Host</th>
+                        <th>Target Destination / Value</th>
+                        <th>TTL</th>
+                        <th>Functionality</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="record-type">A</span></td>
+                        <td>@ (Apex)</td>
+                        <td><span class="record-val">76.76.21.21</span></td>
+                        <td>Auto</td>
+                        <td>Routes apex root domain to Vercel Global Edge CDN</td>
+                    </tr>
+                    <tr>
+                        <td><span class="record-type">CNAME</span></td>
+                        <td>www</td>
+                        <td><span class="record-val">cname.vercel-dns.com</span></td>
+                        <td>Auto</td>
+                        <td>Directs www traffic to edge reverse proxy</td>
+                    </tr>
+                    <tr>
+                        <td><span class="record-type">CNAME</span></td>
+                        <td>api</td>
+                        <td><span class="record-val">techvault-node.onrender.com</span></td>
+                        <td>Auto</td>
+                        <td>Points API subdomain to dedicated Express/Node container</td>
+                    </tr>
+                    <tr>
+                        <td><span class="record-type">MX</span></td>
+                        <td>@</td>
+                        <td><span class="record-val">mail.google.com (Priority: 1)</span></td>
+                        <td>14400</td>
+                        <td>Handles developer customer inquiries &amp; order invoices</td>
+                    </tr>
+                    <tr>
+                        <td><span class="record-type">TXT</span></td>
+                        <td>@</td>
+                        <td><span class="record-val">v=spf1 include:_spf.google.com ~all</span></td>
+                        <td>Auto</td>
+                        <td>SPF anti-spoofing cryptographic identity validation</td>
+                    </tr>
+                    <tr>
+                        <td><span class="record-type">NS</span></td>
+                        <td>@</td>
+                        <td><span class="record-val">ns1.cloudflare.com, ns2.cloudflare.com</span></td>
+                        <td>86400</td>
+                        <td>Delegates authoritative DNS handling to Cloudflare network</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🚀 5-Step Domain Registration &amp; Cloud Deployment Workflow</h2>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <h4>Domain Acquisition via Registrar</h4>
+                        <p>Perform WHOIS query for <code>techvault-store.io</code> through an ICANN-accredited registrar (Namecheap / Cloudflare Registrar) and register with WHOIS privacy masking.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <h4>Authoritative Nameserver Delegation</h4>
+                        <p>Change registrar nameservers to Cloudflare (<code>ns1.cloudflare.com</code>, <code>ns2.cloudflare.com</code>) to enable low-latency Anycast routing and DDoS absorption.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <h4>Cloud Deployment Pipeline (Vercel / Netlify / Render)</h4>
+                        <p>Deploy GitHub repository containing <code>vercel.json</code> / <code>netlify.toml</code> build commands, establishing automated CI/CD previews on every commit.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <h4>DNS Zone Record Mapping</h4>
+                        <p>Create Apex <code>A</code> record pointing to <code>76.76.21.21</code> and <code>CNAME</code> records for <code>www</code> and <code>api</code> subdomains.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <h4>Automated SSL/TLS Certificate Issuance</h4>
+                        <p>Vercel/Cloudflare automatically provisions an X.509 Let's Encrypt certificate via the ACME challenge, enforcing HTTPS 301 redirection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 Interactive DNS Propagation Tester</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Simulate terminal DNS query execution (equivalent to <code>dig</code> or <code>nslookup</code>):</p>
+            <div class="dns-checker">
+                <input type="text" id="domainInput" value="techvault-store.io" placeholder="Enter domain...">
+                <select id="recordInput">
+                    <option value="A">A Record (IPv4)</option>
+                    <option value="CNAME">CNAME Record</option>
+                    <option value="MX">MX Record (Mail)</option>
+                    <option value="TXT">TXT Record (SPF/DKIM)</option>
+                    <option value="NS">NS Record (Nameservers)</option>
+                </select>
+                <button class="btn-check" onclick="simulateLookup()">Run DNS Query</button>
+            </div>
+            <div id="checkResult" class="check-result"></div>
+        </div>
+    </div>
+
+    <script>
+        function simulateLookup() {
+            const domain = document.getElementById('domainInput').value;
+            const type = document.getElementById('recordInput').value;
+            const resBox = document.getElementById('checkResult');
+            resBox.style.display = 'block';
+
+            let answer = '';
+            if (type === 'A') answer = `${domain}.   3600   IN   A   76.76.21.21 (Vercel Anycast Edge IP)`;
+            else if (type === 'CNAME') answer = `www.${domain}.   3600   IN   CNAME   cname.vercel-dns.com.`;
+            else if (type === 'MX') answer = `${domain}.   14400  IN   MX   1 mail.google.com.`;
+            else if (type === 'TXT') answer = `${domain}.   3600   IN   TXT   "v=spf1 include:_spf.google.com ~all"`;
+            else if (type === 'NS') answer = `${domain}.   86400  IN   NS   ns1.cloudflare.com.\n${domain}.   86400  IN   NS   ns2.cloudflare.com.`;
+
+            resBox.innerHTML = `
+; <<>> DiG 9.18.1-1ubuntu1.1-Ubuntu <<>> @1.1.1.1 ${domain} ${type}
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 58210
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; QUESTION SECTION:
+;${domain}.                     IN      ${type}
+
+;; ANSWER SECTION:
+${answer}
+
+;; Query time: 11 msec
+;; SERVER: 1.1.1.1#53(1.1.1.1) (Cloudflare DNS)
+;; WHEN: ${new Date().toUTCString()}
+;; STATUS: GLOBAL DNS PROPAGATION VERIFIED 100%
+            `;
+        }
+    </script>
+</body>
+</html>

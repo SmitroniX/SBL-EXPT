@@ -1,0 +1,430 @@
+/* Experiment 02: HealthPulse Password & Star Rating CSS */
+:root {
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
+    --card-bg: #ffffff;
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --star-gold: #f59e0b;
+    --star-dim: #cbd5e1;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0b132b 0%, #1c2541 60%, #3a506b 100%);
+    min-height: 100vh;
+    padding: 36px 20px;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 24px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px;
+}
+
+.badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    font-size: 1.9rem;
+    color: #0f172a;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.meta-strip {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    background: #f1f5f9;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: #334155;
+}
+
+/* 2-Column Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+}
+
+.icon-bubble {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.lock-icon {
+    background: #e0f2fe;
+}
+
+.star-icon {
+    background: #fef3c7;
+}
+
+.card-header h2 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Password Input */
+.input-wrapper {
+    margin-bottom: 18px;
+}
+
+.input-wrapper label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.password-field-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field-container input {
+    width: 100%;
+    padding: 11px 44px 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+}
+
+.password-field-container input:focus {
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.toggle-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px;
+    color: #64748b;
+}
+
+/* Strength Meter */
+.strength-meter-container {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+}
+
+.strength-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.strength-val {
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.progress-track {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Security Rules List */
+.rules-box {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.rules-box h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.rule-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.82rem;
+}
+
+.rule-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.rule-list li.invalid {
+    color: #94a3b8;
+}
+
+.rule-list li.valid {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.rule-icon {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Doctor Profile Banner */
+.doctor-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.doc-avatar {
+    font-size: 1.8rem;
+}
+
+.doc-info h3 {
+    font-size: 0.95rem;
+    color: #166534;
+    font-weight: 700;
+}
+
+.doc-info p {
+    font-size: 0.78rem;
+    color: #15803d;
+}
+
+/* Star Rating Widget */
+.rating-widget {
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.rating-widget label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #92400e;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.stars-container {
+    display: inline-flex;
+    gap: 8px;
+    font-size: 2.2rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.star {
+    color: var(--star-dim);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
+}
+
+.star:hover {
+    transform: scale(1.25);
+}
+
+.star.active, .star.hovered {
+    color: var(--star-gold);
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.rating-feedback {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #b45309;
+    min-height: 20px;
+}
+
+/* Feedback Comments */
+.feedback-area {
+    margin-bottom: 18px;
+}
+
+.feedback-area label {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.feedback-area textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    outline: none;
+    resize: vertical;
+    background: #f8fafc;
+}
+
+.feedback-area textarea:focus {
+    border-color: var(--primary);
+    background: #ffffff;
+}
+
+/* Actions */
+.rating-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 10px 18px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-solid {
+    background: #0284c7;
+    color: #ffffff;
+}
+
+.btn-solid:hover {
+    background: #0369a1;
+}
+
+.btn-outline {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.btn-outline:hover {
+    background: #cbd5e1;
+}
+
+/* Success Banner */
+.success-banner {
+    margin-top: 16px;
+    background: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    color: #065f46;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    margin-top: 24px;
+}
+
+@media (max-width: 820px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

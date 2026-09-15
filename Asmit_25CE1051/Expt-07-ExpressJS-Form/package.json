@@ -1,0 +1,14 @@
+{
+  "name": "healthpulse-express-form",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 07: Design a Form Using Express.js in Node.js - HealthPulse",
+  "main": "server.js",
+  "author": "Asmit Jogdand (25CE1051)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

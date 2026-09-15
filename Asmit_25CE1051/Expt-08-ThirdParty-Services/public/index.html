@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse - Third-Party Services Integration (SMS, Email, Payment)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #0f172a;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #0b132b; color: #f8fafc; min-height: 100vh; padding: 28px 20px; }
+        
+        .container { max-width: 1120px; margin: 0 auto; }
+        
+        .student-strip {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 8px; font-size: 0.82rem; margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+        }
+        .student-strip strong { color: #38bdf8; }
+
+        .header {
+            text-align: center; margin-bottom: 32px;
+        }
+        .header h1 { font-size: 2rem; font-weight: 800; color: #ffffff; }
+        .header p { color: #94a3b8; font-size: 0.95rem; margin-top: 6px; }
+
+        /* Gateway Cards Grid */
+        .gateway-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;
+        }
+        .gateway-card {
+            background: var(--card-bg); color: var(--text-dark); border-radius: var(--radius);
+            padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card-top { margin-bottom: 16px; }
+        .icon-tag {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+        }
+        .icon-circle {
+            width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+        }
+        .email-bg { background: #e0f2fe; color: #0284c7; }
+        .sms-bg { background: #dcfce7; color: #16a34a; }
+        .pay-bg { background: #fef3c7; color: #d97706; }
+
+        .gateway-card h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+        .gateway-card p { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
+
+        .form-row { margin-bottom: 12px; text-align: left; }
+        .form-row label { display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
+        .form-row input, .form-row select {
+            width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 0.85rem; outline: none;
+        }
+
+        .btn {
+            width: 100%; padding: 11px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-email { background: #0284c7; color: #ffffff; }
+        .btn-email:hover { background: #0369a1; }
+        .btn-sms { background: #16a34a; color: #ffffff; }
+        .btn-sms:hover { background: #15803d; }
+        .btn-pay { background: #d97706; color: #ffffff; }
+        .btn-pay:hover { background: #b45309; }
+
+        /* Output Box */
+        .output-box {
+            background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-top: 14px; font-size: 0.8rem;
+        }
+
+        /* Logs Console */
+        .logs-card {
+            background: #1e293b; border-radius: var(--radius); padding: 24px; border: 1px solid #334155;
+        }
+        .logs-card h3 { color: #38bdf8; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .log-terminal {
+            background: #0f172a; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 0.82rem; color: #34d399; max-height: 250px; overflow-y: auto;
+        }
+        .log-item { margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #1e293b; }
+        .log-tag { color: #38bdf8; font-weight: bold; }
+        .log-time { color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="student-strip">
+            <span>SBL-AWT Expt 08 | <strong>Third-Party Services Integration</strong></span>
+            <span>Student: <strong>Asmit Jogdand (25CE1051)</strong> | RAIT Computer Engineering</span>
+        </div>
+
+        <header class="header">
+            <h1>HealthPulse Clinical Gateways Suite</h1>
+            <p>Interactive Integration of Email (Nodemailer), SMS Gateway (Twilio Protocol), and Payment Gateway (Razorpay/Stripe)</p>
+        </header>
+
+        <div class="gateway-grid">
+            <!-- 1. Email Service -->
+            <div class="gateway-card">
+                <div class="card-top">
+                    <div class="icon-tag">
+                        <div class="icon-circle email-bg">📧</div>
+                        <div>
+                            <h2>Email Gateway</h2>
+                            <p>Nodemailer + Ethereal SMTP Provider</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label>Patient Email</label>
+                        <input type="email" id="emailInput" value="asmit.patient@healthpulse.com">
+                    </div>
+                    <div class="form-row">
+                        <label>Patient Name</label>
+                        <input type="text" id="emailName" value="Asmit Jogdand">
+                    </div>
+                    <div class="form-row">
+                        <label>Prescription Note</label>
+                        <input type="text" id="prescriptionInput" value="Azithromycin 500mg (OD x 3 days) + Vit C 500mg">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-email" onclick="triggerEmail()">Dispatch Medical Email &rarr;</button>
+                    <div id="emailOutput" class="output-box" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- 2. SMS Gateway -->
+            <div class="gateway-card">
+                <div class="card-top">
+                    <div class="icon-tag">
+                        <div class="icon-circle sms-bg">💬</div>
+                        <div>
+                            <h2>SMS Gateway</h2>
+                            <p>Twilio Telecom Integration Protocol</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label>Patient Phone Number</label>
+                        <input type="tel" id="smsPhone" value="+91 9820123456">
+                    </div>
+                    <div class="form-row">
+                        <label>Patient Name</label>
+                        <input type="text" id="smsName" value="Asmit Jogdand">
+                    </div>
+                    <div class="form-row">
+                        <label>Slot Timing</label>
+                        <input type="text" id="smsSlot" value="Today at 04:30 PM">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sms" onclick="triggerSMS()">Dispatch SMS & OTP Alert &rarr;</button>
+                    <div id="smsOutput" class="output-box" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- 3. Payment Gateway -->
+            <div class="gateway-card">
+                <div class="card-top">
+                    <div class="icon-tag">
+                        <div class="icon-circle pay-bg">💳</div>
+                        <div>
+                            <h2>Payment Gateway</h2>
+                            <p>Razorpay / Stripe Checkout Flow</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label>Patient Name</label>
+                        <input type="text" id="payName" value="Asmit Jogdand">
+                    </div>
+                    <div class="form-row">
+                        <label>Consultation Service</label>
+                        <select id="payType">
+                            <option value="Cardiology Specialist OPD">Cardiology Specialist OPD (₹800)</option>
+                            <option value="Pediatric Wellness Checkup">Pediatric Wellness Checkup (₹600)</option>
+                            <option value="Emergency Trauma Triage">Emergency Trauma Triage (₹1200)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label>Fee Amount (INR)</label>
+                        <input type="number" id="payAmount" value="800">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-pay" onclick="triggerPayment()">Execute Payment Checkout &rarr;</button>
+                    <div id="payOutput" class="output-box" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Activity Log -->
+        <div class="logs-card">
+            <h3>
+                <span>🖥️ Real-Time Gateway Transaction Logs</span>
+                <button onclick="refreshLogs()" style="background:#334155; color:#f8fafc; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem;">Refresh Logs</button>
+            </h3>
+            <div id="logTerminal" class="log-terminal">
+                <div>[Gateway Engine Initialized] Ready to capture outgoing Email, SMS, and Payment webhooks...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function triggerEmail() {
+            const out = document.getElementById('emailOutput');
+            out.style.display = 'block';
+            out.innerHTML = 'Sending email via SMTP...';
+
+            const payload = {
+                patientEmail: document.getElementById('emailInput').value,
+                patientName: document.getElementById('emailName').value,
+                doctorName: 'Dr. Amarsinh V. Vidhate',
+                prescriptionNotes: document.getElementById('prescriptionInput').value
+            };
+
+            try {
+                const res = await fetch('/api/service/email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    out.innerHTML = `
+                        <span style="color:#16a34a; font-weight:bold;">✓ Email Sent!</span><br/>
+                        <strong>MessageID:</strong> ${data.data.messageId}<br/>
+                        ${data.data.previewUrl && data.data.previewUrl.startsWith('http') ? `<a href="${data.data.previewUrl}" target="_blank" style="color:#0284c7; font-weight:bold;">🔗 Click to View Rendered Email Preview</a>` : 'Status: Captured in SMTP spool'}
+                    `;
+                    refreshLogs();
+                }
+            } catch (err) {
+                out.innerHTML = `<span style="color:#dc2626;">Error: ${err.message}</span>`;
+            }
+        }
+
+        async function triggerSMS() {
+            const out = document.getElementById('smsOutput');
+            out.style.display = 'block';
+            out.innerHTML = 'Dispatching SMS through gateway...';
+
+            const payload = {
+                phone: document.getElementById('smsPhone').value,
+                patientName: document.getElementById('smsName').value,
+                appointmentTime: document.getElementById('smsSlot').value
+            };
+
+            try {
+                const res = await fetch('/api/service/sms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    out.innerHTML = `
+                        <span style="color:#16a34a; font-weight:bold;">✓ SMS Delivered!</span><br/>
+                        <strong>Twilio SID:</strong> ${data.data.sid}<br/>
+                        <strong>Generated OTP:</strong> <mark style="padding:2px 6px; border-radius:4px; font-weight:bold;">${data.data.otp}</mark><br/>
+                        <strong>Content:</strong> <em>"${data.data.body}"</em>
+                    `;
+                    refreshLogs();
+                }
+            } catch (err) {
+                out.innerHTML = `<span style="color:#dc2626;">Error: ${err.message}</span>`;
+            }
+        }
+
+        async function triggerPayment() {
+            const out = document.getElementById('payOutput');
+            out.style.display = 'block';
+            out.innerHTML = 'Creating order on Payment Gateway...';
+
+            const amount = document.getElementById('payAmount').value;
+            const patientName = document.getElementById('payName').value;
+            const consultationType = document.getElementById('payType').value;
+
+            try {
+                // Step 1: Create Order
+                const orderRes = await fetch('/api/service/payment/order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, patientName, consultationType })
+                });
+                const orderData = await orderRes.json();
+
+                // Step 2: Simulate Payment Capture
+                const verifyRes = await fetch('/api/service/payment/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderId: orderData.order.orderId,
+                        amount,
+                        patientName
+                    })
+                });
+                const verifyData = await verifyRes.json();
+
+                out.innerHTML = `
+                    <span style="color:#16a34a; font-weight:bold;">✓ Payment Captured (PAID)</span><br/>
+                    <strong>Order ID:</strong> ${verifyData.receipt.orderId}<br/>
+                    <strong>Payment Ref:</strong> ${verifyData.receipt.paymentId}<br/>
+                    <strong>Amount Paid:</strong> ${verifyData.receipt.amount}<br/>
+                    <strong>Status:</strong> ${verifyData.receipt.verificationStatus}
+                `;
+                refreshLogs();
+            } catch (err) {
+                out.innerHTML = `<span style="color:#dc2626;">Error: ${err.message}</span>`;
+            }
+        }
+
+        async function refreshLogs() {
+            try {
+                const res = await fetch('/api/service/logs');
+                const data = await res.json();
+                const container = document.getElementById('logTerminal');
+
+                if (data.logs.length === 0) return;
+
+                container.innerHTML = data.logs.map(log => `
+                    <div class="log-item">
+                        <span class="log-time">[${log.timestamp}]</span>
+                        <span class="log-tag">[${log.service}]</span>
+                        <span>${JSON.stringify(log)}</span>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>

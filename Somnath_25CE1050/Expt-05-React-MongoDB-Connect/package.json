@@ -1,0 +1,16 @@
+{
+  "name": "techvault-react-mongodb-connect",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 05: Connecting React.js with MongoDB - TechVault Orders",
+  "main": "server.js",
+  "author": "Somnath Jha (25CE1050)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
+}

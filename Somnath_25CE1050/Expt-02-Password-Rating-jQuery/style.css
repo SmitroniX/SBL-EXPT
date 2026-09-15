@@ -1,0 +1,157 @@
+/* Experiment 02: TechVault Password & Star Rating CSS */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --card-bg: #1f2937;
+    --bg: #111827;
+    --text: #f9fafb;
+    --text-muted: #9ca3af;
+    --border: #374151;
+    --star-gold: #fbbf24;
+    --star-dim: #4b5563;
+    --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+
+body {
+    background: linear-gradient(135deg, #0a0d14 0%, #111827 50%, #1e1b4b 100%);
+    min-height: 100vh;
+    padding: 36px 20px;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container { width: 100%; max-width: 1040px; margin: 0 auto; }
+
+.header {
+    background: rgba(31, 41, 55, 0.9);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 24px 30px;
+    text-align: center;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.badge {
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.header h1 { font-size: 1.9rem; color: #ffffff; font-weight: 800; margin-bottom: 4px; }
+.subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; }
+
+.meta-strip {
+    display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;
+    background: #111827; padding: 8px 18px; border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;
+    border: 1px solid var(--border);
+}
+
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.card {
+    background: var(--card-bg); border-radius: var(--radius); padding: 28px;
+    border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    display: flex; flex-direction: column;
+}
+
+.card-header {
+    display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px;
+    border-bottom: 1px solid var(--border); padding-bottom: 16px;
+}
+
+.icon-bubble {
+    width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+}
+.lock-icon { background: rgba(99, 102, 241, 0.2); }
+.star-icon { background: rgba(251, 191, 36, 0.2); }
+
+.card-header h2 { font-size: 1.25rem; color: #ffffff; font-weight: 700; }
+.card-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+.input-wrapper { margin-bottom: 18px; }
+.input-wrapper label { display: block; font-size: 0.88rem; font-weight: 600; color: #e5e7eb; margin-bottom: 6px; }
+
+.password-field-container { position: relative; display: flex; align-items: center; }
+.password-field-container input {
+    width: 100%; padding: 11px 44px 11px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-size: 0.95rem; outline: none; background: #111827; color: #ffffff; transition: all 0.2s ease;
+}
+.password-field-container input:focus {
+    border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px; color: #9ca3af; }
+
+.strength-meter-container {
+    background: #111827; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 18px;
+}
+.strength-labels { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px; }
+.strength-val { font-weight: 700; }
+
+.progress-track { height: 8px; background: #374151; border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; border-radius: 999px; transition: width 0.3s ease, background-color 0.3s ease; }
+
+.rules-box { background: #111827; border-radius: 8px; padding: 14px 16px; border: 1px solid var(--border); }
+.rules-box h4 { font-size: 0.85rem; font-weight: 700; color: #d1d5db; margin-bottom: 8px; }
+.rule-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; }
+.rule-list li { display: flex; align-items: center; gap: 8px; }
+.rule-list li.invalid { color: #6b7280; }
+.rule-list li.valid { color: #10b981; font-weight: 600; }
+
+/* Product Item */
+.product-banner {
+    display: flex; align-items: center; gap: 12px; background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3); padding: 10px 14px; border-radius: 8px; margin-bottom: 18px;
+}
+.product-img { font-size: 1.8rem; }
+.product-info h3 { font-size: 0.95rem; color: #c7d2fe; font-weight: 700; }
+.product-info p { font-size: 0.78rem; color: #a5b4fc; }
+
+.rating-widget {
+    background: #111827; border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 18px;
+}
+.rating-widget label { font-size: 0.88rem; font-weight: 600; color: #fde68a; display: block; margin-bottom: 10px; }
+
+.stars-container { display: inline-flex; gap: 8px; font-size: 2.2rem; cursor: pointer; user-select: none; }
+.star { color: var(--star-dim); transition: transform 0.2s, color 0.2s; }
+.star:hover { transform: scale(1.25); }
+.star.active, .star.hovered { color: var(--star-gold); text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+
+.rating-feedback { margin-top: 8px; font-size: 0.85rem; font-weight: 600; color: #f59e0b; min-height: 20px; }
+
+.feedback-area { margin-bottom: 18px; }
+.feedback-area label { display: block; font-size: 0.84rem; font-weight: 600; color: #e5e7eb; margin-bottom: 6px; }
+.feedback-area textarea {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem;
+    outline: none; resize: vertical; background: #111827; color: #ffffff;
+}
+.feedback-area textarea:focus { border-color: var(--primary); }
+
+.rating-actions { display: flex; gap: 12px; justify-content: flex-end; }
+.btn { padding: 10px 18px; font-size: 0.88rem; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; transition: all 0.2s; }
+.btn-solid { background: #6366f1; color: #ffffff; }
+.btn-solid:hover { background: #4f46e5; }
+.btn-outline { background: #374151; color: #d1d5db; }
+.btn-outline:hover { background: #4b5563; }
+
+.success-banner {
+    margin-top: 16px; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981;
+    color: #6ee7b7; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; line-height: 1.4;
+}
+
+.footer { text-align: center; color: #6b7280; font-size: 0.8rem; margin-top: 24px; }
+
+@media (max-width: 820px) { .cards-grid { grid-template-columns: 1fr; } }

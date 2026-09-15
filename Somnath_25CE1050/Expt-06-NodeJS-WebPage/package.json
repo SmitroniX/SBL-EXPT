@@ -1,0 +1,11 @@
+{
+  "name": "techvault-node-webpage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 06: Design a Web Page using Node.js - TechVault Catalog",
+  "main": "server.js",
+  "author": "Somnath Jha (25CE1050)",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

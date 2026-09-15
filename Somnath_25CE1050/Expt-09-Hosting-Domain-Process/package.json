@@ -1,0 +1,10 @@
+{
+  "name": "techvault-hosting-domain-process",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 09: Hosting the Website with Domain Registration Process - TechVault",
+  "author": "Somnath Jha (25CE1050)",
+  "scripts": {
+    "start": "npx serve public"
+  }
+}

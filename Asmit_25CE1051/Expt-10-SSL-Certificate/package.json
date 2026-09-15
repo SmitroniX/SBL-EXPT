@@ -1,0 +1,15 @@
+{
+  "name": "healthpulse-ssl-certificate-integration",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 10: Integration of SSL Certificate in Web Application - HealthPulse",
+  "main": "server-https.js",
+  "author": "Asmit Jogdand (25CE1051)",
+  "scripts": {
+    "cert": "bash generate-ssl.sh",
+    "start": "node server-https.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVault - React.js + MongoDB Orders Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React 18 & Babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #090d16;
+            --card-bg: #111827;
+            --border: #1f2937;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+        body { background-color: var(--bg); color: #f9fafb; padding: 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .student-strip {
+            background: rgba(255,255,255,0.08); color: #c7d2fe; padding: 10px 20px; border-radius: 8px; font-size: 0.82rem;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 8px;
+            border: 1px solid var(--border);
+        }
+        .student-strip strong { color: #818cf8; }
+
+        .header {
+            background: var(--card-bg); border-radius: var(--radius); padding: 24px 30px;
+            border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .header-title h1 { font-size: 1.6rem; font-weight: 800; color: #ffffff; }
+        .header-title p { font-size: 0.88rem; color: #9ca3af; }
+
+        .db-status-pill {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
+        }
+        .db-connected { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+        .db-fallback { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+
+        .layout-grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
+        .card { background: var(--card-bg); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); }
+        .card h2 { font-size: 1.2rem; color: #ffffff; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: #e5e7eb; margin-bottom: 4px; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem; outline: none;
+            background: #1f2937; color: #ffffff;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+
+        .btn { padding: 10px 18px; border-radius: 8px; font-size: 0.88rem; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: #ffffff; width: 100%; margin-top: 8px; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-delete { background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 5px 10px; font-size: 0.75rem; border-radius: 6px; }
+        .btn-delete:hover { background: rgba(239, 68, 68, 0.4); }
+
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { text-align: left; padding: 10px 12px; background: #1f2937; color: #9ca3af; font-weight: 600; border-bottom: 1px solid var(--border); }
+        td { padding: 12px; border-bottom: 1px solid var(--border); color: #d1d5db; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .badge-status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+        .status-transit { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+        .status-confirmed { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        .alert-box { padding: 10px 14px; border-radius: 8px; font-size: 0.82rem; margin-bottom: 16px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+        @media (max-width: 860px) { .layout-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [status, setStatus] = useState(null);
+            const [orders, setOrders] = useState([]);
+            const [isLoading, setIsLoading] = useState(true);
+            const [feedbackMsg, setFeedbackMsg] = useState('');
+
+            // Form state
+            const [customerName, setCustomerName] = useState('');
+            const [productTitle, setProductTitle] = useState('Titan-X 49" UltraWide Curved OLED');
+            const [category, setCategory] = useState('Displays');
+            const [unitPrice, setUnitPrice] = useState(115000);
+            const [quantity, setQuantity] = useState(1);
+            const [shippingCity, setShippingCity] = useState('Navi Mumbai');
+
+            const handleProductChange = (e) => {
+                const title = e.target.value;
+                setProductTitle(title);
+                if (title.includes('Titan-X')) { setUnitPrice(115000); setCategory('Displays'); }
+                else if (title.includes('Apex-Pro')) { setUnitPrice(185000); setCategory('Workstations'); }
+                else if (title.includes('RTX 4090')) { setUnitPrice(172000); setCategory('AI Accelerators'); }
+                else { setUnitPrice(16500); setCategory('Keyboards'); }
+            };
+
+            const fetchData = async () => {
+                try {
+                    const statusRes = await fetch('/api/status');
+                    const statusJson = await statusRes.json();
+                    setStatus(statusJson);
+
+                    const orderRes = await fetch('/api/orders');
+                    const orderJson = await orderRes.json();
+                    if (orderJson.success) {
+                        setOrders(orderJson.data);
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                fetchData();
+            }, []);
+
+            const handleOrderSubmit = async (e) => {
+                e.preventDefault();
+                if (!customerName.trim()) return alert('Please enter developer name');
+
+                const payload = { customerName, productTitle, category, unitPrice, quantity, shippingCity };
+
+                try {
+                    const res = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json = await res.json();
+                    if (json.success) {
+                        setFeedbackMsg(`✓ ${json.message}`);
+                        setCustomerName('');
+                        fetchData();
+                        setTimeout(() => setFeedbackMsg(''), 4000);
+                    }
+                } catch (err) {
+                    alert('Error creating order: ' + err.message);
+                }
+            };
+
+            const handleDelete = async (id) => {
+                if (!confirm('Are you sure you want to cancel this hardware dispatch order?')) return;
+                try {
+                    const res = await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+                    const json = await res.json();
+                    if (json.success) {
+                        setFeedbackMsg('✓ Order successfully removed.');
+                        fetchData();
+                        setTimeout(() => setFeedbackMsg(''), 4000);
+                    }
+                } catch (err) {
+                    alert('Delete failed: ' + err.message);
+                }
+            };
+
+            return (
+                <div className="container">
+                    <div className="student-strip">
+                        <span>SBL-AWT Expt 05 | <strong>Connecting React.js with MongoDB</strong></span>
+                        <span>Student: <strong>Somnath Jha (25CE1050)</strong> | RAIT Computer Engineering</span>
+                    </div>
+
+                    <header className="header">
+                        <div className="header-title">
+                            <h1>TechVault MERN Inventory &amp; Order Sync</h1>
+                            <p>Real-Time React.js Client Synchronized with Express &amp; MongoDB</p>
+                        </div>
+                        <div>
+                            {status && (
+                                <div className={`db-status-pill ${status.mongoConnected ? 'db-connected' : 'db-fallback'}`}>
+                                    <span>{status.mongoConnected ? '🟢' : '🟡'}</span>
+                                    <span>Engine: {status.storageEngine}</span>
+                                </div>
+                            )}
+                        </div>
+                    </header>
+
+                    {feedbackMsg && (
+                        <div className="alert-box">
+                            {feedbackMsg}
+                        </div>
+                    )}
+
+                    <div className="layout-grid">
+                        <!-- Order Form -->
+                        <div className="card">
+                            <h2><span>⚡</span> Create Hardware Order</h2>
+                            <form onSubmit={handleOrderSubmit}>
+                                <div className="form-group">
+                                    <label>Developer / Customer Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Somnath Jha"
+                                        value={customerName}
+                                        onChange={(e) => setCustomerName(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Hardware Product Selection</label>
+                                    <select value={productTitle} onChange={handleProductChange}>
+                                        <option value="Titan-X 49\" UltraWide Curved OLED">Titan-X 49" UltraWide Curved OLED (₹1,15,000)</option>
+                                        <option value="Apex-Pro Developer Workstation">Apex-Pro Developer Workstation (₹1,85,000)</option>
+                                        <option value="NVIDIA RTX 4090 24GB AI Station">NVIDIA RTX 4090 24GB AI Station (₹1,72,000)</option>
+                                        <option value="Keychron Q1 Pro Wireless Mechanical">Keychron Q1 Pro Wireless Mechanical (₹16,500)</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Hardware Category</label>
+                                    <input type="text" value={category} readOnly style={{ opacity: 0.8 }} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Quantity</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="10"
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Shipping City</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Navi Mumbai / Bangalore"
+                                        value={shippingCity}
+                                        onChange={(e) => setShippingCity(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <button type="submit" className="btn btn-primary">
+                                    Save Order to MongoDB &rarr;
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Orders Roster -->
+                        <div className="card">
+                            <h2><span>📋</span> Active Hardware Dispatches ({orders.length})</h2>
+                            {isLoading ? (
+                                <p style={{ color: '#9ca3af' }}>Connecting to API backend...</p>
+                            ) : orders.length === 0 ? (
+                                <p style={{ color: '#9ca3af' }}>No hardware orders placed yet. Create an order!</p>
+                            ) : (
+                                <div className="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product &amp; Cat</th>
+                                                <th>Qty &amp; Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {orders.map(o => (
+                                                <tr key={o._id}>
+                                                    <td>
+                                                        <strong>{o.customerName}</strong>
+                                                        <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>{o.shippingCity}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div>{o.productTitle}</div>
+                                                        <small style={{ color: '#818cf8' }}>{o.category}</small>
+                                                    </td>
+                                                    <td>
+                                                        <div>₹{(o.unitPrice * o.quantity).toLocaleString()}</div>
+                                                        <small style={{ color: '#9ca3af' }}>Qty: {o.quantity}</small>
+                                                    </td>
+                                                    <td>
+                                                        <span className="badge-status status-confirmed">
+                                                            {o.dispatchStatus || 'Confirmed'}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-delete"
+                                                            onClick={() => handleDelete(o._id)}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

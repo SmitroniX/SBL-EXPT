@@ -1,0 +1,16 @@
+{
+  "name": "techvault-thirdparty-services",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 08: Integration of Third-Party Services (SMS, Payment, Email) - TechVault",
+  "main": "server.js",
+  "author": "Somnath Jha (25CE1050)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13"
+  }
+}

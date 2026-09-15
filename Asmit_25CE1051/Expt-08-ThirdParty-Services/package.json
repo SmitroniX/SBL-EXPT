@@ -1,0 +1,16 @@
+{
+  "name": "healthpulse-thirdparty-services",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment 08: Integration of Third-Party Services (SMS, Payment, Email) - HealthPulse",
+  "main": "server.js",
+  "author": "Asmit Jogdand (25CE1051)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13"
+  }
+}

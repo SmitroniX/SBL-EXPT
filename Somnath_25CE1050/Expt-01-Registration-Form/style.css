@@ -1,0 +1,316 @@
+/* TechVault Developer Registration CSS */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --accent: #8b5cf6;
+    --success: #10b981;
+    --error: #ef4444;
+    --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e1b4b 100%);
+    --card-bg: #1f2937;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --border: #374151;
+    --radius: 12px;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.form-header {
+    background: rgba(31, 41, 55, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    padding: 24px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.vault-icon {
+    font-size: 1.8rem;
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.15);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.logo-area h1 {
+    font-size: 2.1rem;
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.student-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    background: #111827;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.form-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.form-section {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    background: rgba(17, 24, 39, 0.5);
+}
+
+.form-section legend {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #818cf8;
+    padding: 0 10px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #e5e7eb;
+}
+
+.req {
+    color: #f87171;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #f9fafb;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: #111827;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    background-color: #0f172a;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* Validation Styling */
+input:not(:placeholder-shown):valid {
+    border-color: var(--success);
+}
+
+input:not(:placeholder-shown):invalid:not(:focus) {
+    border-color: var(--error);
+}
+
+.field-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.radio-label, .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    color: #e5e7eb;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.terms-box {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    padding: 12px 16px;
+    border-radius: 8px;
+    line-height: 1.4;
+    color: #c7d2fe;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
+}
+
+.btn-secondary {
+    background: #374151;
+    color: #d1d5db;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+
+.modal-content {
+    background: #1f2937;
+    border: 1px solid var(--border);
+    padding: 32px;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 90%;
+    text-align: center;
+    color: #f9fafb;
+}
+
+.modal-icon {
+    font-size: 2.5rem;
+    background: rgba(99, 102, 241, 0.2);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px auto;
+}
+
+.summary-box {
+    text-align: left;
+    background: #111827;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 16px 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #d1d5db;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 24px;
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 680px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .form-card { padding: 20px; }
+}

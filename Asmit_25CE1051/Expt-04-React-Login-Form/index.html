@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPulse - Patient Login Portal (React.js)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React 18 & Babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --success: #10b981;
+            --error: #ef4444;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 40%, #0369a1 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .student-strip {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: #e0f2fe;
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+        }
+        .student-strip strong {
+            color: #ffffff;
+        }
+
+        .auth-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 460px;
+            padding: 36px 32px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .auth-logo {
+            width: 48px;
+            height: 48px;
+            background: #e0f2fe;
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin: 0 auto 12px auto;
+        }
+        .auth-header h2 {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            font-weight: 800;
+        }
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        /* Role Selector */
+        .role-selector {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .role-tab {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .role-tab.active {
+            background: #ffffff;
+            color: var(--primary-dark);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #f8fafc;
+        }
+        .input-box input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+        .input-box input.has-error {
+            border-color: var(--error);
+            background: #fff5f5;
+        }
+
+        .toggle-pwd {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        .error-text {
+            color: var(--error);
+            font-size: 0.78rem;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            margin-bottom: 22px;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #475569;
+            cursor: pointer;
+        }
+        .forgot-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+        }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Demo credentials pill */
+        .demo-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+        .demo-box strong {
+            color: #334155;
+        }
+
+        /* Dashboard View (Logged In) */
+        .dashboard-view {
+            text-align: center;
+        }
+        .avatar-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #16a34a;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px auto;
+        }
+        .dashboard-view h3 {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .role-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .portal-stats {
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .btn-logout {
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-logout:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function LoginFormApp() {
+            // Form State
+            const [role, setRole] = useState('Patient');
+            const [identifier, setIdentifier] = useState('');
+            const [password, setPassword] = useState('');
+            const [rememberMe, setRememberMe] = useState(false);
+            const [showPassword, setShowPassword] = useState(false);
+
+            // Validation & Loading State
+            const [errors, setErrors] = useState({});
+            const [isLoading, setIsLoading] = useState(false);
+            const [loggedInUser, setLoggedInUser] = useState(null);
+
+            // Validation function
+            const validate = () => {
+                const newErrors = {};
+                if (!identifier.trim()) {
+                    newErrors.identifier = 'Email or Mobile Number is required';
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier) && !/^[6-9][0-9]{9}$/.test(identifier)) {
+                    newErrors.identifier = 'Enter a valid Email or 10-digit Phone';
+                }
+
+                if (!password) {
+                    newErrors.password = 'Password is required';
+                } else if (password.length < 6) {
+                    newErrors.password = 'Password must be at least 6 characters';
+                }
+
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+
+            // Form Submit Handler
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (!validate()) return;
+
+                setIsLoading(true);
+
+                // Simulate authentication request
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setLoggedInUser({
+                        username: identifier,
+                        role: role,
+                        loginTime: new Date().toLocaleTimeString()
+                    });
+                }, 900);
+            };
+
+            // Logout Handler
+            const handleLogout = () => {
+                setLoggedInUser(null);
+                setPassword('');
+                setErrors({});
+            };
+
+            // Quick populate demo credentials
+            const fillDemo = (demoRole) => {
+                setRole(demoRole);
+                if (demoRole === 'Patient') {
+                    setIdentifier('asmit.patient@healthpulse.com');
+                    setPassword('HealthPass@123');
+                } else if (demoRole === 'Doctor') {
+                    setIdentifier('dr.vidhate@healthpulse.com');
+                    setPassword('DoctorSecure#456');
+                } else {
+                    setIdentifier('admin@healthpulse.com');
+                    setPassword('AdminMaster!789');
+                }
+                setErrors({});
+            };
+
+            return (
+                <div>
+                    <div className="student-strip">
+                        SBL-AWT Expt 04 | <strong>Asmit Jogdand (25CE1051)</strong> | RAIT Computer Engineering
+                    </div>
+
+                    <div className="auth-card">
+                        {!loggedInUser ? (
+                            <div>
+                                <div className="auth-header">
+                                    <div className="auth-logo">+</div>
+                                    <h2>HealthPulse Portal</h2>
+                                    <p>Sign in to access your electronic health records</p>
+                                </div>
+
+                                {/* Role Switcher */}
+                                <div className="role-selector">
+                                    {['Patient', 'Doctor', 'Admin'].map(r => (
+                                        <button
+                                            type="button"
+                                            key={r}
+                                            className={`role-tab ${role === r ? 'active' : ''}`}
+                                            onClick={() => setRole(r)}
+                                        >
+                                            {r === 'Patient' ? '👤 Patient' : r === 'Doctor' ? '👨‍⚕️ Doctor' : '🛡️ Admin'}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <form onSubmit={handleSubmit} noValidate>
+                                    {/* Identifier Input */}
+                                    <div className="form-group">
+                                        <label htmlFor="identifier">Registered Email or Mobile Number</label>
+                                        <div className="input-box">
+                                            <input
+                                                id="identifier"
+                                                type="text"
+                                                placeholder={role === 'Doctor' ? 'doctor@healthpulse.com' : 'patient@healthpulse.com or 9876543210'}
+                                                value={identifier}
+                                                onChange={(e) => setIdentifier(e.target.value)}
+                                                className={errors.identifier ? 'has-error' : ''}
+                                            />
+                                        </div>
+                                        {errors.identifier && (
+                                            <div className="error-text">⚠️ {errors.identifier}</div>
+                                        )}
+                                    </div>
+
+                                    {/* Password Input */}
+                                    <div className="form-group">
+                                        <label htmlFor="password">Account Password</label>
+                                        <div className="input-box">
+                                            <input
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                placeholder="Enter your secure password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                className={errors.password ? 'has-error' : ''}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="toggle-pwd"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                title="Toggle password view"
+                                            >
+                                                {showPassword ? '🙈' : '👁️'}
+                                            </button>
+                                        </div>
+                                        {errors.password && (
+                                            <div className="error-text">⚠️ {errors.password}</div>
+                                        )}
+                                    </div>
+
+                                    {/* Options */}
+                                    <div className="form-options">
+                                        <label className="remember-me">
+                                            <input
+                                                type="checkbox"
+                                                checked={rememberMe}
+                                                onChange={(e) => setRememberMe(e.target.checked)}
+                                            />
+                                            Remember Me
+                                        </label>
+                                        <a href="#forgot" className="forgot-link" onClick={() => alert("Password reset link sent to your registered contact.")}>
+                                            Forgot Password?
+                                        </a>
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <button
+                                        type="submit"
+                                        className="btn-submit"
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? (
+                                            <span>Authenticating Session...</span>
+                                        ) : (
+                                            <span>Sign In to {role} Portal &rarr;</span>
+                                        )}
+                                    </button>
+                                </form>
+
+                                {/* Demo quick fill */}
+                                <div className="demo-box">
+                                    <strong>Quick Test Profiles:</strong>
+                                    <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                                        <button type="button" onClick={() => fillDemo('Patient')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer' }}>Fill Patient</button>
+                                        <button type="button" onClick={() => fillDemo('Doctor')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer' }}>Fill Doctor</button>
+                                        <button type="button" onClick={() => fillDemo('Admin')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer' }}>Fill Admin</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            /* Authenticated Dashboard View */
+                            <div className="dashboard-view">
+                                <div className="avatar-circle">✓</div>
+                                <h3>Welcome Back!</h3>
+                                <p style={{ color: '#475569', fontSize: '0.9rem', marginBottom: '8px' }}>
+                                    {loggedInUser.username}
+                                </p>
+                                <span className="role-badge">{loggedInUser.role} Portal Access Granted</span>
+
+                                <div className="portal-stats">
+                                    <div><strong>Login Timestamp:</strong> {loggedInUser.loginTime}</div>
+                                    <div><strong>Security Protocol:</strong> TLS 1.3 / AES-256 Encrypted</div>
+                                    <div><strong>Status:</strong> Active HealthPulse Session</div>
+                                    <div><strong>Next Scheduled OPD:</strong> Dr. Vidhate (Tomorrow, 10:30 AM)</div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="btn-logout"
+                                    onClick={handleLogout}
+                                >
+                                    Sign Out of Session
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<LoginFormApp />);
+    </script>
+</body>
+</html>

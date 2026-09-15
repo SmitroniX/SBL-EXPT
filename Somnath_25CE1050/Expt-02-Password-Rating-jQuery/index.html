@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVault - Password Strength Analyzer & Product 5-Star Rating (jQuery)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <span class="badge">SBL-AWT | Experiment 02</span>
+            <h1>TechVault Security & Review Analytics</h1>
+            <p class="subtitle">Real-Time Password Entropy Indicator & 5-Star Hardware Product Rating System</p>
+            <div class="meta-strip">
+                <span><strong>Student:</strong> Somnath Jha</span>
+                <span><strong>Roll No:</strong> 25CE1050</span>
+                <span><strong>Technology:</strong> jQuery 3.7.1, HTML5, CSS3</span>
+            </div>
+        </header>
+
+        <div class="cards-grid">
+            <!-- Module 1: Password Strength Analyzer -->
+            <section class="card">
+                <div class="card-header">
+                    <div class="icon-bubble lock-icon">🔐</div>
+                    <div>
+                        <h2>Developer Password Strength Indicator</h2>
+                        <p class="card-desc">Evaluates credential entropy in real time using jQuery event listeners & DOM updates.</p>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="passwordInput">Enter Master Developer Password:</label>
+                    <div class="password-field-container">
+                        <input type="password" id="passwordInput" placeholder="Enter secure passphrase..." autocomplete="off">
+                        <button type="button" id="togglePasswordBtn" class="toggle-btn" title="Toggle visibility">👁️</button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="strength-meter-container">
+                    <div class="strength-labels">
+                        <span>Entropy Evaluation:</span>
+                        <strong id="strengthText" class="strength-val">None</strong>
+                    </div>
+                    <div class="progress-track">
+                        <div id="strengthBar" class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Checklist Rules -->
+                <div class="rules-box">
+                    <h4>Required Security Criteria:</h4>
+                    <ul class="rule-list">
+                        <li id="rule-length" class="invalid"><span class="rule-icon">✕</span> Minimum 8 characters</li>
+                        <li id="rule-lower" class="invalid"><span class="rule-icon">✕</span> Lowercase letter (a-z)</li>
+                        <li id="rule-upper" class="invalid"><span class="rule-icon">✕</span> Uppercase letter (A-Z)</li>
+                        <li id="rule-number" class="invalid"><span class="rule-icon">✕</span> Numeric digit (0-9)</li>
+                        <li id="rule-special" class="invalid"><span class="rule-icon">✕</span> Special symbol (!@#$%^&*)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Module 2: Hardware Star Rating System -->
+            <section class="card">
+                <div class="card-header">
+                    <div class="icon-bubble star-icon">⭐</div>
+                    <div>
+                        <h2>Hardware Product 5-Star Rating</h2>
+                        <p class="card-desc">Interactive product rating widget with hover states and verified review submission.</p>
+                    </div>
+                </div>
+
+                <!-- Product Showcase Item -->
+                <div class="product-banner">
+                    <div class="product-img">🖥️</div>
+                    <div class="product-info">
+                        <h3>Titan-X 49" UltraWide Curved OLED</h3>
+                        <p>240Hz Refresh Rate | 5120x1440 Dual-QHD | USB-C 90W PD</p>
+                    </div>
+                </div>
+
+                <!-- Star Rating Component -->
+                <div class="rating-widget">
+                    <label>How would you rate this developer display?</label>
+                    <div class="stars-container" id="starsContainer">
+                        <span class="star" data-value="1" title="Poor (1 Star)">★</span>
+                        <span class="star" data-value="2" title="Fair (2 Stars)">★</span>
+                        <span class="star" data-value="3" title="Good (3 Stars)">★</span>
+                        <span class="star" data-value="4" title="Very Good (4 Stars)">★</span>
+                        <span class="star" data-value="5" title="Exceptional (5 Stars)">★</span>
+                    </div>
+                    <div class="rating-feedback">
+                        <span id="ratingStatus">Click on stars to rate this hardware</span>
+                    </div>
+                </div>
+
+                <!-- Feedback Comments -->
+                <div class="feedback-area">
+                    <label for="feedbackComments">Technical Review Remarks:</label>
+                    <textarea id="feedbackComments" rows="3" placeholder="Share your experience regarding color accuracy, pixel density, text clarity for IDEs, or stand ergonomics..."></textarea>
+                </div>
+
+                <div class="rating-actions">
+                    <button type="button" id="resetRatingBtn" class="btn btn-outline">Reset</button>
+                    <button type="button" id="submitFeedbackBtn" class="btn btn-solid">Submit Hardware Review</button>
+                </div>
+
+                <!-- Result Banner -->
+                <div id="reviewSuccessBanner" class="success-banner" style="display:none;">
+                    <h4>🎉 Review Verified &amp; Published!</h4>
+                    <p id="reviewSummaryText"></p>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 TechVault E-Commerce Suite | Skill Based Lab - Advanced Web Technology | Somnath Jha (25CE1050)</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVault - Developer Login & SSO Portal (React.js)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React 18 & Babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --error: #ef4444;
+            --text-light: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #374151;
+            --radius: 14px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e1b4b 100%);
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;
+        }
+
+        .student-strip {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); color: #c7d2fe;
+            padding: 6px 18px; border-radius: 999px; font-size: 0.82rem; margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15); text-align: center;
+        }
+        .student-strip strong { color: #ffffff; }
+
+        .auth-card {
+            background: #1f2937; border-radius: var(--radius); width: 100%; max-width: 460px;
+            padding: 36px 32px; box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5); border: 1px solid var(--border);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-header { text-align: center; margin-bottom: 24px; }
+        .auth-logo {
+            width: 48px; height: 48px; background: rgba(99, 102, 241, 0.2); color: #fbbf24;
+            font-size: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 12px; margin: 0 auto 12px auto;
+        }
+        .auth-header h2 { font-size: 1.6rem; color: #ffffff; font-weight: 800; }
+        .auth-header p { color: var(--text-muted); font-size: 0.88rem; margin-top: 4px; }
+
+        /* Role Switcher */
+        .role-selector { display: flex; background: #111827; border-radius: 8px; padding: 4px; margin-bottom: 20px; }
+        .role-tab {
+            flex: 1; padding: 8px 4px; text-align: center; border: none; background: transparent;
+            font-size: 0.82rem; font-weight: 600; color: #9ca3af; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+        }
+        .role-tab.active { background: #374151; color: #ffffff; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #e5e7eb; margin-bottom: 6px; }
+
+        .input-box { position: relative; display: flex; align-items: center; }
+        .input-box input {
+            width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+            font-size: 0.92rem; outline: none; background: #111827; color: #ffffff; transition: border-color 0.2s;
+        }
+        .input-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); }
+        .input-box input.has-error { border-color: var(--error); background: #2a1515; }
+
+        .toggle-pwd { position: absolute; right: 12px; background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #9ca3af; }
+
+        .error-text { color: #f87171; font-size: 0.78rem; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
+        .form-options { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-bottom: 22px; }
+        .remember-me { display: flex; align-items: center; gap: 6px; color: #d1d5db; cursor: pointer; }
+        .forgot-link { color: #818cf8; text-decoration: none; font-weight: 600; }
+        .forgot-link:hover { text-decoration: underline; }
+
+        .btn-submit {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #ffffff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); transition: all 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5); }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .demo-box { background: #111827; border: 1px dashed var(--border); border-radius: 8px; padding: 10px 14px; margin-top: 20px; font-size: 0.78rem; color: #9ca3af; }
+        .demo-box strong { color: #d1d5db; }
+
+        /* Dashboard View */
+        .dashboard-view { text-align: center; color: #f9fafb; }
+        .avatar-circle {
+            width: 64px; height: 64px; border-radius: 50%; background: rgba(16, 185, 129, 0.2);
+            color: #34d399; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px auto;
+        }
+        .dashboard-view h3 { font-size: 1.4rem; color: #ffffff; margin-bottom: 4px; }
+        .role-badge { display: inline-block; background: rgba(99, 102, 241, 0.2); color: #a5b4fc; font-size: 0.75rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; text-transform: uppercase; margin-bottom: 20px; }
+        .portal-stats { background: #111827; border-radius: 10px; border: 1px solid var(--border); padding: 14px; text-align: left; margin-bottom: 24px; font-size: 0.85rem; line-height: 1.6; }
+        .btn-logout { background: #ef4444; color: #ffffff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-logout:hover { background: #dc2626; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function LoginFormApp() {
+            const [role, setRole] = useState('Developer');
+            const [identifier, setIdentifier] = useState('');
+            const [password, setPassword] = useState('');
+            const [rememberMe, setRememberMe] = useState(false);
+            const [showPassword, setShowPassword] = useState(false);
+
+            const [errors, setErrors] = useState({});
+            const [isLoading, setIsLoading] = useState(false);
+            const [loggedInUser, setLoggedInUser] = useState(null);
+
+            const validate = () => {
+                const newErrors = {};
+                if (!identifier.trim()) {
+                    newErrors.identifier = 'Work Email or Developer ID is required';
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier) && !/^[6-9][0-9]{9}$/.test(identifier)) {
+                    newErrors.identifier = 'Enter a valid Email format or 10-digit Phone';
+                }
+
+                if (!password) {
+                    newErrors.password = 'Master password is required';
+                } else if (password.length < 6) {
+                    newErrors.password = 'Password must contain at least 6 characters';
+                }
+
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (!validate()) return;
+
+                setIsLoading(true);
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setLoggedInUser({
+                        username: identifier,
+                        role: role,
+                        loginTime: new Date().toLocaleTimeString(),
+                        tier: role === 'Enterprise Buyer' ? 'Corporate Diamond' : 'Platinum Developer'
+                    });
+                }, 900);
+            };
+
+            const handleLogout = () => {
+                setLoggedInUser(null);
+                setPassword('');
+                setErrors({});
+            };
+
+            const fillDemo = (demoRole) => {
+                setRole(demoRole);
+                if (demoRole === 'Developer') {
+                    setIdentifier('somnath.dev@techvault.io');
+                    setPassword('DevVault#2026');
+                } else if (demoRole === 'Enterprise Buyer') {
+                    setIdentifier('procurement@studio.com');
+                    setPassword('EnterprisePass!99');
+                } else {
+                    setIdentifier('admin@techvault.io');
+                    setPassword('RootAdminMaster$1');
+                }
+                setErrors({});
+            };
+
+            return (
+                <div>
+                    <div className="student-strip">
+                        SBL-AWT Expt 04 | <strong>Somnath Jha (25CE1050)</strong> | RAIT Computer Engineering
+                    </div>
+
+                    <div className="auth-card">
+                        {!loggedInUser ? (
+                            <div>
+                                <div className="auth-header">
+                                    <div className="auth-logo">⚡</div>
+                                    <h2>TechVault Portal</h2>
+                                    <p>Sign in to manage developer workstations &amp; hardware orders</p>
+                                </div>
+
+                                <div className="role-selector">
+                                    {['Developer', 'Enterprise Buyer', 'Admin'].map(r => (
+                                        <button
+                                            type="button"
+                                            key={r}
+                                            className={`role-tab ${role === r ? 'active' : ''}`}
+                                            onClick={() => setRole(r)}
+                                        >
+                                            {r === 'Developer' ? '💻 Dev' : r === 'Enterprise Buyer' ? '🏢 Enterprise' : '🛡️ Admin'}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <form onSubmit={handleSubmit} noValidate>
+                                    <div className="form-group">
+                                        <label htmlFor="identifier">Work Email or Developer Handle</label>
+                                        <div className="input-box">
+                                            <input
+                                                id="identifier"
+                                                type="text"
+                                                placeholder={role === 'Enterprise Buyer' ? 'procurement@company.com' : 'somnath.dev@techvault.io'}
+                                                value={identifier}
+                                                onChange={(e) => setIdentifier(e.target.value)}
+                                                className={errors.identifier ? 'has-error' : ''}
+                                            />
+                                        </div>
+                                        {errors.identifier && (
+                                            <div className="error-text">⚠️ {errors.identifier}</div>
+                                        )}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="password">Master Password</label>
+                                        <div className="input-box">
+                                            <input
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                placeholder="Enter secure master password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                className={errors.password ? 'has-error' : ''}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="toggle-pwd"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                title="Toggle visibility"
+                                            >
+                                                {showPassword ? '🙈' : '👁️'}
+                                            </button>
+                                        </div>
+                                        {errors.password && (
+                                            <div className="error-text">⚠️ {errors.password}</div>
+                                        )}
+                                    </div>
+
+                                    <div className="form-options">
+                                        <label className="remember-me">
+                                            <input
+                                                type="checkbox"
+                                                checked={rememberMe}
+                                                onChange={(e) => setRememberMe(e.target.checked)}
+                                            />
+                                            Keep Session Active
+                                        </label>
+                                        <a href="#reset" className="forgot-link" onClick={() => alert("Password reset token dispatched to registered contact.")}>
+                                            Reset Token?
+                                        </a>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="btn-submit"
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? (
+                                            <span>Verifying RSA Credentials...</span>
+                                        ) : (
+                                            <span>Authorize &amp; Sign In &rarr;</span>
+                                        )}
+                                    </button>
+                                </form>
+
+                                <div className="demo-box">
+                                    <strong>Quick Test Profiles:</strong>
+                                    <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                                        <button type="button" onClick={() => fillDemo('Developer')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer', background: '#374151', color: '#fff', border: 'none', borderRadius: '4px' }}>Dev</button>
+                                        <button type="button" onClick={() => fillDemo('Enterprise Buyer')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer', background: '#374151', color: '#fff', border: 'none', borderRadius: '4px' }}>Enterprise</button>
+                                        <button type="button" onClick={() => fillDemo('Admin')} style={{ padding: '3px 8px', fontSize: '0.75rem', cursor: 'pointer', background: '#374151', color: '#fff', border: 'none', borderRadius: '4px' }}>Admin</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="dashboard-view">
+                                <div className="avatar-circle">⚡</div>
+                                <h3>Welcome, Developer!</h3>
+                                <p style={{ color: '#9ca3af', fontSize: '0.9rem', marginBottom: '8px' }}>
+                                    {loggedInUser.username}
+                                </p>
+                                <span className="role-badge">{loggedInUser.tier} • {loggedInUser.role}</span>
+
+                                <div className="portal-stats">
+                                    <div><strong>Session Authenticated:</strong> {loggedInUser.loginTime}</div>
+                                    <div><strong>Security Key:</strong> RSA-4096 / OAuth 2.0 Token</div>
+                                    <div><strong>Active Hardware Dispatch:</strong> Titan-X 49" OLED (In Transit)</div>
+                                    <div><strong>Corporate Credit Line:</strong> ₹5,00,000 Approved</div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="btn-logout"
+                                    onClick={handleLogout}
+                                >
+                                    Terminate Session
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<LoginFormApp />);
+    </script>
+</body>
+</html>
