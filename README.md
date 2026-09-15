@@ -4,14 +4,14 @@
 
 ---
 
-## 👥 Student Submissions & Laboratory Work
+## 👥 Student Submissions & Portfolio Index
 
-This repository contains the complete laboratory work, source code implementations, live runnable demonstrations, and technical experiment manuals for two students:
+This repository contains the complete laboratory submissions, working source code, interactive browser interfaces, live backend servers, and comprehensive technical experiment manuals for two students:
 
-| Student Name | Roll Number | Problem Statement Domain | Workspace Directory |
-| :--- | :---: | :--- | :--- |
-| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) |
-| **Somnath Jha** | `25CE1050` | **TechVault** — Developer Hardware & Smart Electronics E-Commerce Hub | [`/Somnath_25CE1050`](./Somnath_25CE1050) |
+| Student Name | Roll Number | Problem Statement Domain | Workspace Directory | Complete Execution Manual |
+| :--- | :---: | :--- | :--- | :--- |
+| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) | [**View Asmit's Manual**](./Asmit_25CE1051/README.md) |
+| **Somnath Jha** | `25CE1050` | **TechVault** — Developer Hardware & Smart Electronics E-Commerce Hub | [`/Somnath_25CE1050`](./Somnath_25CE1050) | [**View Somnath's Manual**](./Somnath_25CE1050/README.md) |
 
 ---
 
@@ -32,48 +32,31 @@ This repository contains the complete laboratory work, source code implementatio
 
 ---
 
-## 🚀 Quick Start Guide
+## ⚡ Master Execution Commands Matrix
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- [npm](https://www.npmjs.com/) (bundled with Node.js)
-- Modern Web Browser (Chrome, Firefox, Edge, Brave)
-
-### Running Frontend Experiments (Expt 1, 2, 3, 4)
-Open any `index.html` file directly in your browser or serve using a lightweight HTTP server:
-```bash
-# Using npx serve (recommended)
-npx serve .
-# Or using python built-in server
-python3 -m http.server 8080
-```
-
-### Running Backend Experiments (Expt 5, 6, 7, 8, 10)
-Navigate to the respective experiment directory, install dependencies, and start the server:
-```bash
-# Example: Running Experiment 6 (Node.js Web Page)
-cd Asmit_25CE1051/Expt-06-NodeJS-WebPage
-node server.js
-
-# Example: Running Experiment 7 (Express.js Form)
-cd Somnath_25CE1050/Expt-07-ExpressJS-Form
-npm install
-node server.js
-
-# Example: Running Experiment 8 (Third-Party Services)
-cd Asmit_25CE1051/Expt-08-ThirdParty-Services
-npm install
-node server.js
-```
+| Expt. No. | Technology / Component | Asmit Jogdand (`25CE1051`) Command | Somnath Jha (`25CE1050`) Command | Default Port / Access URL |
+| :---: | :--- | :--- | :--- | :---: |
+| **Expt 1** | HTML5/CSS3 Registration | `cd Asmit_25CE1051/Expt-01-Registration-Form && google-chrome index.html` | `cd Somnath_25CE1050/Expt-01-Registration-Form && google-chrome index.html` | Browser Direct / `file://` |
+| **Expt 2** | jQuery Password & Rating | `cd Asmit_25CE1051/Expt-02-Password-Rating-jQuery && google-chrome index.html` | `cd Somnath_25CE1050/Expt-02-Password-Rating-jQuery && google-chrome index.html` | Browser Direct / `file://` |
+| **Expt 3** | React.js Homepage | `cd Asmit_25CE1051/Expt-03-React-Homepage && google-chrome index.html` | `cd Somnath_25CE1050/Expt-03-React-Homepage && google-chrome index.html` | Browser Direct / `file://` |
+| **Expt 4** | React.js Login Form | `cd Asmit_25CE1051/Expt-04-React-Login-Form && google-chrome index.html` | `cd Somnath_25CE1050/Expt-04-React-Login-Form && google-chrome index.html` | Browser Direct / `file://` |
+| **Expt 5** | MERN + MongoDB Hub | `cd Asmit_25CE1051/Expt-05-React-MongoDB-Connect && npm i && node server.js` | `cd Somnath_25CE1050/Expt-05-React-MongoDB-Connect && npm i && node server.js` | `http://localhost:5000` (Asmit)<br/>`http://localhost:5001` (Somnath) |
+| **Expt 6** | Pure Node.js Web Page | `cd Asmit_25CE1051/Expt-06-NodeJS-WebPage && PORT=3555 node server.js` | `cd Somnath_25CE1050/Expt-06-NodeJS-WebPage && PORT=3556 node server.js` | `http://localhost:3555` (Asmit)<br/>`http://localhost:3556` (Somnath) |
+| **Expt 7** | Express.js Form | `cd Asmit_25CE1051/Expt-07-ExpressJS-Form && npm i && node server.js` | `cd Somnath_25CE1050/Expt-07-ExpressJS-Form && npm i && node server.js` | `http://localhost:4000` (Asmit)<br/>`http://localhost:4001` (Somnath) |
+| **Expt 8** | Third-Party Services | `cd Asmit_25CE1051/Expt-08-ThirdParty-Services && npm i && node server.js` | `cd Somnath_25CE1050/Expt-08-ThirdParty-Services && npm i && node server.js` | `http://localhost:8000` (Asmit)<br/>`http://localhost:8001` (Somnath) |
+| **Expt 9** | Cloud Hosting & DNS | `cd Asmit_25CE1051/Expt-09-Hosting-Domain-Process && google-chrome public/index.html` | `cd Somnath_25CE1050/Expt-09-Hosting-Domain-Process && google-chrome public/index.html` | Browser Direct / `npx serve public` |
+| **Expt 10** | SSL/TLS HTTPS Server | `cd Asmit_25CE1051/Expt-10-SSL-Certificate && npm i && node server-https.js` | `cd Somnath_25CE1050/Expt-10-SSL-Certificate && npm i && node server-https.js` | `https://localhost:8443` (Asmit)<br/>`https://localhost:9443` (Somnath) |
 
 ---
 
-## 📂 Repository Structure
+## 📂 Repository File System Structure
 ```
 SBL-EXPT/
-├── README.md                          # Master Laboratory Syllabus & Guide
-├── Asmit_25CE1051/                    # Complete Lab Work for Asmit Jogdand (HealthPulse)
-│   ├── README.md                      # Comprehensive Lab Manual & Index
+├── README.md                          # Master Syllabus & Quick Execution Matrix
+├── .gitignore                         # Standard git ignore rules (node_modules, .env)
+│
+├── Asmit_25CE1051/                    # Complete Laboratory Work for Asmit Jogdand
+│   ├── README.md                      # Exhaustive Manual & Execution Guide (HealthPulse)
 │   ├── Expt-01-Registration-Form/     # HTML5 & CSS3 Patient Registration Form
 │   ├── Expt-02-Password-Rating-jQuery/# Password Strength & Doctor Rating System
 │   ├── Expt-03-React-Homepage/        # React.js HealthCare Portal Homepage
@@ -85,8 +68,8 @@ SBL-EXPT/
 │   ├── Expt-09-Hosting-Domain-Process/# Cloud Hosting Guide & Domain Configuration
 │   └── Expt-10-SSL-Certificate/       # HTTPS Server, OpenSSL & Nginx Config
 │
-└── Somnath_25CE1050/                  # Complete Lab Work for Somnath Jha (TechVault)
-    ├── README.md                      # Comprehensive Lab Manual & Index
+└── Somnath_25CE1050/                  # Complete Laboratory Work for Somnath Jha
+    ├── README.md                      # Exhaustive Manual & Execution Guide (TechVault)
     ├── Expt-01-Registration-Form/     # HTML5 & CSS3 Developer Account Registration
     ├── Expt-02-Password-Rating-jQuery/# Password Strength & Product 5-Star Rating
     ├── Expt-03-React-Homepage/        # React.js TechVault Electronics Storefront
