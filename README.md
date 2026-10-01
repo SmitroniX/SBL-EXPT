@@ -8,10 +8,10 @@
 
 This repository contains the complete laboratory submissions, working source code, interactive browser interfaces, live backend servers, and comprehensive technical experiment manuals for two students:
 
-| Student Name | Roll Number | Problem Statement Domain | Workspace Directory | Complete Execution Manual |
-| :--- | :---: | :--- | :--- | :--- |
-| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) | [**View Asmit's Manual**](./Asmit_25CE1051/README.md) |
-| **Somnath Jha** | `25CE1050` | **TechVault** — Developer Hardware & Smart Electronics E-Commerce Hub | [`/Somnath_25CE1050`](./Somnath_25CE1050) | [**View Somnath's Manual**](./Somnath_25CE1050/README.md) |
+| Student Name | Roll Number | Problem Statement Domain | Workspace Directory | Complete Execution Manual | Master Input & Output Journal |
+| :--- | :---: | :--- | :--- | :--- | :--- |
+| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) | [**View Asmit's Manual**](./Asmit_25CE1051/README.md) | [**View Input & Output Journal**](./Asmit_25CE1051/INPUT_OUTPUT.md) |
+| **Somnath Jha** | `25CE1050` | **TechVault** — Developer Hardware & Smart Electronics E-Commerce Hub | [`/Somnath_25CE1050`](./Somnath_25CE1050) | [**View Somnath's Manual**](./Somnath_25CE1050/README.md) | — |
 
 ---
 
