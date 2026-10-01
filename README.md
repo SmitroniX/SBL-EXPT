@@ -10,7 +10,7 @@ This repository contains the complete laboratory submissions, working source cod
 
 | Student Name | Roll Number | Problem Statement Domain | Workspace Directory | Complete Execution Manual | Master Input & Output Journal |
 | :--- | :---: | :--- | :--- | :--- | :--- |
-| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) | [**View Asmit's Manual**](./Asmit_25CE1051/README.md) | [**View Input & Output Journal**](./Asmit_25CE1051/INPUT_OUTPUT.md) |
+| **Asmit Jogdand** | `25CE1051` | **HealthPulse** — Digital Healthcare & Clinical Management Portal | [`/Asmit_25CE1051`](./Asmit_25CE1051) | [**View Asmit's Manual**](./Asmit_25CE1051/README.md) | [**Markdown**](./Asmit_25CE1051/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF (12 Pages)**](./Asmit_25CE1051/INPUT_OUTPUT.pdf) |
 | **Somnath Jha** | `25CE1050` | **TechVault** — Developer Hardware & Smart Electronics E-Commerce Hub | [`/Somnath_25CE1050`](./Somnath_25CE1050) | [**View Somnath's Manual**](./Somnath_25CE1050/README.md) | — |
 
 ---

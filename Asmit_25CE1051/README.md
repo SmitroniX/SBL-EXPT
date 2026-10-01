@@ -11,22 +11,22 @@
 
 ---
 
-> 📘 **Master Lab Practical Journal:** [**View Comprehensive Input & Output Manual (Expts 01 – 10)**](./INPUT_OUTPUT.md)
+> 📘 **Master Lab Practical Journal:** [**View Markdown Manual**](./INPUT_OUTPUT.md) &nbsp;|&nbsp; [**Download Printable PDF Journal (12 Pages)**](./INPUT_OUTPUT.pdf)
 
 ## 📑 Syllabus & Experiment Mapping Index
 
-| Expt. No. | Official Syllabus Title | HealthPulse Implementation | Directory Link | Execution Mode | Input / Output Manual |
+| Expt. No. | Official Syllabus Title | HealthPulse Implementation | Directory Link | Execution Mode | Input / Output Documentation |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **01** | Design a Registration Form using HTML5 and CSS3 | Patient Health Profile & Insurance Registration | [`Expt-01-Registration-Form`](./Expt-01-Registration-Form) | Browser Standalone | [**View I/O**](./Expt-01-Registration-Form/INPUT_OUTPUT.md) |
-| **02** | Build a Password Strength Indicator & Star Rating System using jQuery | Staff Credential Entropy Analyzer & Doctor Consultation 5-Star Rating | [`Expt-02-Password-Rating-jQuery`](./Expt-02-Password-Rating-jQuery) | Browser Standalone | [**View I/O**](./Expt-02-Password-Rating-jQuery/INPUT_OUTPUT.md) |
-| **03** | Design a Homepage using React.js | Multi-Specialty Clinical Homepage with Live Department Filtering | [`Expt-03-React-Homepage`](./Expt-03-React-Homepage) | React 18 / Browser | [**View I/O**](./Expt-03-React-Homepage/INPUT_OUTPUT.md) |
-| **04** | Create a Simple Login Form using React.js | Multi-Role Patient & Doctor Authentication Portal with Session Dashboard | [`Expt-04-React-Login-Form`](./Expt-04-React-Login-Form) | React 18 / Browser | [**View I/O**](./Expt-04-React-Login-Form/INPUT_OUTPUT.md) |
-| **05** | Connecting Your React.js Project with MongoDB | Full-Stack MERN Patient Appointment Hub with Live MongoDB Sync | [`Expt-05-React-MongoDB-Connect`](./Expt-05-React-MongoDB-Connect) | Node API + React UI | [**View I/O**](./Expt-05-React-MongoDB-Connect/INPUT_OUTPUT.md) |
-| **06** | Design a Web Page using Node.js | Pure Node.js Web Server with Native Stream Buffer Parsing & Diagnostics | [`Expt-06-NodeJS-WebPage`](./Expt-06-NodeJS-WebPage) | Pure Node Server | [**View I/O**](./Expt-06-NodeJS-WebPage/INPUT_OUTPUT.md) |
-| **07** | Design a Form Using Express.js in Node.js | Specialist Doctor Consultation Form with Server-side Validation & Receipt | [`Expt-07-ExpressJS-Form`](./Expt-07-ExpressJS-Form) | Express.js Web Server | [**View I/O**](./Expt-07-ExpressJS-Form/INPUT_OUTPUT.md) |
-| **08** | Integration of Third-Party Services (SMS, Payment, Email) | Clinical Prescriptions (Nodemailer), SMS OTP (Twilio), Fees (Razorpay) | [`Expt-08-ThirdParty-Services`](./Expt-08-ThirdParty-Services) | Express Microservices | [**View I/O**](./Expt-08-ThirdParty-Services/INPUT_OUTPUT.md) |
-| **09** | Hosting Website with Domain Registration Process | Production Cloud Hosting Guide, DNS Zone Records (`healthpulse-care.org`) | [`Expt-09-Hosting-Domain-Process`](./Expt-09-Hosting-Domain-Process) | Vercel / Netlify / Static | [**View I/O**](./Expt-09-Hosting-Domain-Process/INPUT_OUTPUT.md) |
-| **10** | Integration of SSL Certificate in Web Application | HTTPS Server, OpenSSL X.509 Keys, HTTP 301 Redirection, Nginx Reverse Proxy | [`Expt-10-SSL-Certificate`](./Expt-10-SSL-Certificate) | Node HTTPS Server | [**View I/O**](./Expt-10-SSL-Certificate/INPUT_OUTPUT.md) |
+| **01** | Design a Registration Form using HTML5 and CSS3 | Patient Health Profile & Insurance Registration | [`Expt-01-Registration-Form`](./Expt-01-Registration-Form) | Browser Standalone | [**MD**](./Expt-01-Registration-Form/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-01-Registration-Form/INPUT_OUTPUT.pdf) |
+| **02** | Build a Password Strength Indicator & Star Rating System using jQuery | Staff Credential Entropy Analyzer & Doctor Consultation 5-Star Rating | [`Expt-02-Password-Rating-jQuery`](./Expt-02-Password-Rating-jQuery) | Browser Standalone | [**MD**](./Expt-02-Password-Rating-jQuery/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-02-Password-Rating-jQuery/INPUT_OUTPUT.pdf) |
+| **03** | Design a Homepage using React.js | Multi-Specialty Clinical Homepage with Live Department Filtering | [`Expt-03-React-Homepage`](./Expt-03-React-Homepage) | React 18 / Browser | [**MD**](./Expt-03-React-Homepage/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-03-React-Homepage/INPUT_OUTPUT.pdf) |
+| **04** | Create a Simple Login Form using React.js | Multi-Role Patient & Doctor Authentication Portal with Session Dashboard | [`Expt-04-React-Login-Form`](./Expt-04-React-Login-Form) | React 18 / Browser | [**MD**](./Expt-04-React-Login-Form/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-04-React-Login-Form/INPUT_OUTPUT.pdf) |
+| **05** | Connecting Your React.js Project with MongoDB | Full-Stack MERN Patient Appointment Hub with Live MongoDB Sync | [`Expt-05-React-MongoDB-Connect`](./Expt-05-React-MongoDB-Connect) | Node API + React UI | [**MD**](./Expt-05-React-MongoDB-Connect/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-05-React-MongoDB-Connect/INPUT_OUTPUT.pdf) |
+| **06** | Design a Web Page using Node.js | Pure Node.js Web Server with Native Stream Buffer Parsing & Diagnostics | [`Expt-06-NodeJS-WebPage`](./Expt-06-NodeJS-WebPage) | Pure Node Server | [**MD**](./Expt-06-NodeJS-WebPage/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-06-NodeJS-WebPage/INPUT_OUTPUT.pdf) |
+| **07** | Design a Form Using Express.js in Node.js | Specialist Doctor Consultation Form with Server-side Validation & Receipt | [`Expt-07-ExpressJS-Form`](./Expt-07-ExpressJS-Form) | Express.js Web Server | [**MD**](./Expt-07-ExpressJS-Form/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-07-ExpressJS-Form/INPUT_OUTPUT.pdf) |
+| **08** | Integration of Third-Party Services (SMS, Payment, Email) | Clinical Prescriptions (Nodemailer), SMS OTP (Twilio), Fees (Razorpay) | [`Expt-08-ThirdParty-Services`](./Expt-08-ThirdParty-Services) | Express Microservices | [**MD**](./Expt-08-ThirdParty-Services/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-08-ThirdParty-Services/INPUT_OUTPUT.pdf) |
+| **09** | Hosting Website with Domain Registration Process | Production Cloud Hosting Guide, DNS Zone Records (`healthpulse-care.org`) | [`Expt-09-Hosting-Domain-Process`](./Expt-09-Hosting-Domain-Process) | Vercel / Netlify / Static | [**MD**](./Expt-09-Hosting-Domain-Process/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-09-Hosting-Domain-Process/INPUT_OUTPUT.pdf) |
+| **10** | Integration of SSL Certificate in Web Application | HTTPS Server, OpenSSL X.509 Keys, HTTP 301 Redirection, Nginx Reverse Proxy | [`Expt-10-SSL-Certificate`](./Expt-10-SSL-Certificate) | Node HTTPS Server | [**MD**](./Expt-10-SSL-Certificate/INPUT_OUTPUT.md) &nbsp;\|&nbsp; [**PDF**](./Expt-10-SSL-Certificate/INPUT_OUTPUT.pdf) |
 
 ---
 
